@@ -129,23 +129,28 @@ void Physics_EngineApp::draw() {
 }
 
 void Physics_EngineApp::setupContinuousDemo(glm::vec2 startPos, float inclination,
-											float speed, float gravity)
+	float speed, float gravity)
 {
 	float t = 0;
 	float tStep = 0.5f;
 	float radius = 1.0f;
 	int segments = 12;
 	glm::vec4 colour = glm::vec4(1, 0, 0, 1);
-	
+
 	float xPos;
 	float yPos;
 
+	float degToRadians = glm::pi<float>() / 180.0f;
+
+	inclination *= degToRadians;
+	glm::vec2 velocity = glm::vec2(sin(inclination), cos(inclination)) * speed;
+
 	while (t <= 5)
 	{
-		xPos = startPos + 
+		xPos = startPos.x + velocity.x * t;
+		yPos = startPos.y + velocity.y * t + 0.5f * gravity * t * t;
 
-
-		aie::Gizmos::add2DCircle(glm::vec2(x, y), radius, segments, colour);
+		aie::Gizmos::add2DCircle(glm::vec2(xPos, yPos), radius, segments, colour);
 		t += tStep;
 	}
 }
