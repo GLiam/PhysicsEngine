@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include "Physics_EngineApp.h"
 #include "Texture.h"
 #include "Font.h"
@@ -6,6 +8,7 @@
 #include <Gizmos.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <math.h>
 
 Physics_EngineApp::Physics_EngineApp() {
 
@@ -29,6 +32,12 @@ bool Physics_EngineApp::startup() {
 	m_PhysicsScene->setGravity(glm::vec2(0, -0.0f));
 	m_PhysicsScene->setTimeStep(0.01f);
 
+	//float radius = 1.0f;
+	//float speed = 30;
+	//glm::vec2 starpos(-40, 0);
+	//float inclination = (float)M_PI / 4.0f;
+	//m_PhysicsScene->addActor(new Sphere(starpos, inclination, speed, 1, radius, glm::vec4(1, 0, 0, 1)));
+
 	//Sphere* ball = new Sphere(glm::vec2(-40, 0), 
 	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
 	//
@@ -42,6 +51,7 @@ bool Physics_EngineApp::startup() {
 	//ball1->applyForceToActor(ball1, glm::vec2(-300, 0));
 	//ball->applyForceToActor(ball, glm::vec2(300, 0));
 
+	//m_PhysicsScene->setupContinuousDemo(glm::vec2(-40, 0), 45, 25, -10);
 
 	return true;
 }
@@ -54,7 +64,7 @@ void Physics_EngineApp::shutdown() {
 
 void Physics_EngineApp::update(float deltaTime) {
 	
-	aie::Gizmos::clear();
+	//aie::Gizmos::clear();
 
 	// input example
 	aie::Input* input = aie::Input::getInstance();
@@ -128,29 +138,29 @@ void Physics_EngineApp::draw() {
 	m_2dRenderer->end();
 }
 
-void Physics_EngineApp::setupContinuousDemo(glm::vec2 startPos, float inclination,
-	float speed, float gravity)
-{
-	float t = 0;
-	float tStep = 0.5f;
-	float radius = 1.0f;
-	int segments = 12;
-	glm::vec4 colour = glm::vec4(1, 0, 0, 1);
-
-	float xPos;
-	float yPos;
-
-	float degToRadians = glm::pi<float>() / 180.0f;
-
-	inclination *= degToRadians;
-	glm::vec2 velocity = glm::vec2(sin(inclination), cos(inclination)) * speed;
-
-	while (t <= 5)
-	{
-		xPos = startPos.x + velocity.x * t;
-		yPos = startPos.y + velocity.y * t + 0.5f * gravity * t * t;
-
-		aie::Gizmos::add2DCircle(glm::vec2(xPos, yPos), radius, segments, colour);
-		t += tStep;
-	}
-}
+//void Physics_EngineApp::setupContinuousDemo(glm::vec2 startPos, float inclination,
+//	float speed, float gravity)
+//{
+//	float t = 0;
+//	float tStep = 0.5f;
+//	float radius = 1.0f;
+//	int segments = 12;
+//	glm::vec4 colour = glm::vec4(1, 0, 0, 1);
+//
+//	float xPos;
+//	float yPos;
+//
+//	//float degToRadians = glm::pi<float>() / 180.0f;
+//	//inclination *= degToRadians;
+//
+//	glm::vec2 velocity = glm::vec2(sin(inclination), cos(inclination)) * speed;
+//
+//	while (t <= 5)
+//	{
+//		xPos = startPos.x + velocity.x * t;
+//		yPos = startPos.y + velocity.y * t + 0.5f * gravity * t * t;
+//
+//		aie::Gizmos::add2DCircle(glm::vec2(xPos, yPos), radius, segments, colour);
+//		t += tStep;
+//	}
+//}
