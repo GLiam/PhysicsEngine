@@ -4,36 +4,18 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <list>
-
-
-
-
-
-class PhysicsObject
-{
-public:
-	enum ShapeType {
-		PLANE = 0,
-		SPHERE,
-		BOX
-	};
-
-	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) {}
-	
-	virtual void fixedUpdate(glm::vec2 gravity, float timeStep) = 0;
-	virtual void debug() = 0;
-	virtual void makeGizmo() = 0;
-	virtual void resetPosition() {};
-	
-	
-	ShapeType getShapeID() { return m_shapeID; }
-
-protected:
-	ShapeType m_shapeID;
-};
+#include "PhysicsObject.h"
 
 class PhysicsScene
 {
+public:
+	struct CollisionData
+	{
+		bool		wasCollision = false;
+		glm::vec2	normal = { 0, 0 };
+		float		overlap = 0.0f;
+	};
+
 public:
 	PhysicsScene();
 	~PhysicsScene();
@@ -49,6 +31,10 @@ public:
 	void setTimeStep(const float timeStep) { m_timeStep = timeStep; }
 	float getTimeStep() const { return m_timeStep; }
 
+	void handleCollision(PhysicsObject * object1, PhysicsObject* object2, const CollisionData& collision);
+
+	void seperatCollisionObjects(class Rigidbody * rb1, class Rigidbody * rb2, const PhysicsScene::CollisionData & collision);
+
 	void debugScene();
 
 	void setupContinuousDemo(glm::vec2 startPos, float inclination,
@@ -56,14 +42,14 @@ public:
 
 	void checkForCollisions();
 
-	static bool Plane2Sphere(const class PhysicsObject* object1, 
+	static CollisionData Plane2Sphere(const class PhysicsObject* object1,
 		const class PhysicsObject* object2);
 
-	static bool Sphere2Plane(const class PhysicsObject* object1,
+	static CollisionData Sphere2Plane(const class PhysicsObject* object1,
 		const class PhysicsObject* object2);
 
-	static bool Sphere2Sphere(class PhysicsObject* object1,
-		class PhysicsObject* object2);
+	static CollisionData Sphere2Sphere(const class PhysicsObject* object1,
+		const class PhysicsObject* object2);
 
 protected:
 		glm::vec2 m_gravity;

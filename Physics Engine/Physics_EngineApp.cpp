@@ -10,6 +10,7 @@
 #include <glm/ext.hpp>
 #include <math.h>
 
+
 Physics_EngineApp::Physics_EngineApp() {
 
 }
@@ -29,7 +30,7 @@ bool Physics_EngineApp::startup() {
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
 	m_PhysicsScene = new PhysicsScene();
-	m_PhysicsScene->setGravity(glm::vec2(0, -0.0f));
+	m_PhysicsScene->setGravity(glm::vec2(0, -98.0f));
 	m_PhysicsScene->setTimeStep(0.01f);
 
 	//float radius = 1.0f;
@@ -38,18 +39,23 @@ bool Physics_EngineApp::startup() {
 	//float inclination = (float)M_PI / 4.0f;
 	//m_PhysicsScene->addActor(new Sphere(starpos, inclination, speed, 1, radius, glm::vec4(1, 0, 0, 1)));
 
-	//Sphere* ball = new Sphere(glm::vec2(-40, 0), 
-	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
-	//
-	//Sphere* ball1 = new Sphere(glm::vec2(60, 0),
-	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
-	//
-	//
-	//m_PhysicsScene->addActor(ball);
-	//m_PhysicsScene->addActor(ball1);
+	ball = new Sphere(glm::vec2(-40, 0), 
+		glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
+	
+	Sphere* ball1 = new Sphere(glm::vec2(-40, 60),
+		glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
 
-	//ball1->applyForceToActor(ball1, glm::vec2(-300, 0));
-	//ball->applyForceToActor(ball, glm::vec2(300, 0));
+	line = new Plane({ 0, 1 }, 20);
+
+
+
+
+	m_PhysicsScene->addActor(ball);
+	m_PhysicsScene->addActor(line);
+	m_PhysicsScene->addActor(ball1);
+
+	ball1->applyForceToActor(ball1, glm::vec2(300, 0));
+	ball->applyForceToActor(ball, glm::vec2(300, 0));
 
 	//m_PhysicsScene->setupContinuousDemo(glm::vec2(-40, 0), 45, 25, -10);
 
@@ -64,7 +70,7 @@ void Physics_EngineApp::shutdown() {
 
 void Physics_EngineApp::update(float deltaTime) {
 	
-	//aie::Gizmos::clear();
+	aie::Gizmos::clear();
 
 	// input example
 	aie::Input* input = aie::Input::getInstance();

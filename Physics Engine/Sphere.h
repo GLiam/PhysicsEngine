@@ -11,7 +11,7 @@ public:
 	virtual void makeGizmo() override;
 	virtual bool checkCollision(PhysicsObject* pOther); 
 
-	float getRadius() { return m_radius; }
+	float getRadius() const {return m_radius; }
 	glm::vec4 getColour() { return m_colour; }
 
 	glm::vec2 setVelocity(glm::vec2 velocity) { m_velocity = velocity; }

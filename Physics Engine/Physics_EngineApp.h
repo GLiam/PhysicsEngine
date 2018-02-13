@@ -4,6 +4,7 @@
 #include "Renderer2D.h"
 #include "PhysicsScene.h"
 #include "Sphere.h"
+#include "Plane.h"
 
 class Physics_EngineApp : public aie::Application {
 public:
@@ -24,4 +25,6 @@ protected:
 
 	PhysicsScene*		m_PhysicsScene;
 	Rigidbody*			m_Rigibody;
+	Sphere*				ball;
+	Plane*				line;	
 };
