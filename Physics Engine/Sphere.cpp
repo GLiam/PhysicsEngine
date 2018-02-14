@@ -13,7 +13,7 @@ Sphere::~Sphere()
 
 void Sphere::makeGizmo()
 {
-	aie::Gizmos::add2DCircle(glm::vec2(getPosition().x, getPosition().y), 3.0f, 32, glm::vec4(1, 0.5f, 0, 1));
+	aie::Gizmos::add2DCircle(glm::vec2(getPosition().x, getPosition().y), getRadius(), 32, m_colour);
 }
 
 bool Sphere::checkCollision(PhysicsObject * pOther)

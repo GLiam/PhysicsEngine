@@ -45,12 +45,26 @@ public:
 	static CollisionData Plane2Sphere(const class PhysicsObject* object1,
 		const class PhysicsObject* object2);
 
+	static CollisionData Plane2Box(const class PhysicsObject* object1,
+		const class PhysicsObject* object2);
+
 	static CollisionData Sphere2Plane(const class PhysicsObject* object1,
 		const class PhysicsObject* object2);
 
 	static CollisionData Sphere2Sphere(const class PhysicsObject* object1,
 		const class PhysicsObject* object2);
+	
+	static CollisionData Sphere2Box(const class PhysicsObject* object1,
+		const class PhysicsObject* object2);
 
+	static CollisionData Box2Plane(const class PhysicsObject* object1,
+		const class PhysicsObject* object2);
+
+	static CollisionData Box2Sphere(const class PhysicsObject* object1,
+		const class PhysicsObject* object2);
+
+	static CollisionData Box2Box(const class PhysicsObject* object1,
+		const class PhysicsObject* object2);
 protected:
 		glm::vec2 m_gravity;
 		float m_timeStep;

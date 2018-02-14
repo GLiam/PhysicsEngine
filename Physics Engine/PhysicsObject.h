@@ -8,8 +8,8 @@ public:
 	enum ShapeType {
 		PLANE = 0,
 		SPHERE,
+		BOX,
 		SHAPECOUNT
-//		BOX
 	};
 
 	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) {}

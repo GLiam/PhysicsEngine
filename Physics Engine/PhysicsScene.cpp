@@ -8,8 +8,9 @@ typedef PhysicsScene::CollisionData(*collisionFnc)(const PhysicsObject*, const P
 
 static collisionFnc collisionFunctionArray[] =
 {
-	nullptr,					PhysicsScene::Plane2Sphere,
-	PhysicsScene::Sphere2Plane,	PhysicsScene::Sphere2Sphere
+	nullptr,					PhysicsScene::Plane2Sphere,		PhysicsScene::Plane2Box,
+	PhysicsScene::Sphere2Plane,	PhysicsScene::Sphere2Sphere,	PhysicsScene::Sphere2Box,
+	PhysicsScene::Box2Plane,	PhysicsScene::Box2Sphere,		PhysicsScene::Box2Box,
 };
 
 PhysicsScene::PhysicsScene() : m_timeStep(0.01f), m_gravity(glm::vec2(0, 0))
@@ -96,7 +97,7 @@ void PhysicsScene::handleCollision(PhysicsObject * object1,
 	seperatCollisionObjects(rb1, rb2, collision);
 
 	glm::vec2 relativeVelocity = { 0, 0 };
-	if (rb1) relativeVelocity += rb1->getVelocity();
+	if (rb1) relativeVelocity = rb1->getVelocity();
 	if (rb2) relativeVelocity -= rb2->getVelocity();
 
 	float elasticaty = 1;
@@ -117,7 +118,7 @@ void PhysicsScene::handleCollision(PhysicsObject * object1,
 
 	if (rb2)
 	{
-		glm::vec2 newVelocity = rb2->getVelocity() + (j / rb2->getMass()) * collision.normal;
+		glm::vec2 newVelocity = rb2->getVelocity() - (j / rb2->getMass()) * collision.normal;
 
 		rb2->setVelocity(newVelocity);
 	}
@@ -152,7 +153,7 @@ void PhysicsScene::seperatCollisionObjects(Rigidbody * rb1,
 
 	if (rb1)
 	{
-		rb1->setPosition(rb1->getPosition() - (object1MoveRatio * collision.overlap * collision.normal));
+		rb1->setPosition(rb1->getPosition() + (object1MoveRatio * collision.overlap * collision.normal));
 	}
 	if (rb2)
 	{
@@ -244,17 +245,22 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * obj
 		{
 			collData.wasCollision = true;
 			collData.normal = plane->getNormal();
-			collData.overlap = distanceBetween;
+			collData.overlap = distanceBetween * -1;
 		}
 	}
 	return collData;
 }
 
+PhysicsScene::CollisionData PhysicsScene::Plane2Box(const PhysicsObject * object1, const PhysicsObject * object2)
+{
+	return CollisionData();
+}
+
 PhysicsScene::CollisionData PhysicsScene::Sphere2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
 {
 
-	const Sphere* sphere = dynamic_cast<const Sphere*>(object1);
-	const Plane* plane = dynamic_cast<const Plane*>(object2);
+	//const Sphere* sphere = dynamic_cast<const Sphere*>(object1);
+	//const Plane* plane = dynamic_cast<const Plane*>(object2);
 
 	return Plane2Sphere(object2, object1);
 }
@@ -268,18 +274,45 @@ PhysicsScene::CollisionData PhysicsScene::Sphere2Sphere(const PhysicsObject * ob
 
 	if (sphere1 != nullptr && sphere2 != nullptr)
 	{
-		float distanceBtween = glm::length(sphere2->getPosition() - sphere1->getPosition());
+//		float distanceBetween = glm::length(sphere2->getPosition() - sphere1->getPosition());
 
-		float minDistanceBetween = sphere1->getRadius() + sphere2->getRadius();
+//		float minDistanceBetween = sphere1->getRadius() + sphere2->getRadius();
 
-		if (distanceBtween < minDistanceBetween)
+		glm::vec2 offset = sphere2->getPosition() - sphere1->getPosition();
+		float sqrdDistance = offset.x * offset.x + offset.y * offset.y;
+		float distanceBetween = sqrdDistance;
+
+		float minDistanceBetween = (sphere1->getRadius() + sphere2->getRadius());
+		minDistanceBetween *= minDistanceBetween;
+
+		if (distanceBetween < minDistanceBetween)
 		{
 			CollData.wasCollision = true;
 			CollData.normal = glm::normalize(sphere1->getPosition() - sphere2->getPosition());
-			CollData.overlap = minDistanceBetween - distanceBtween;
+			CollData.overlap = minDistanceBetween - distanceBetween;
 			return CollData;
 		}
 	}
 	return CollData;
+}
+
+PhysicsScene::CollisionData PhysicsScene::Sphere2Box(const PhysicsObject * object1, const PhysicsObject * object2)
+{
+	return CollisionData();
+}
+
+PhysicsScene::CollisionData PhysicsScene::Box2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
+{
+	return CollisionData();
+}
+
+PhysicsScene::CollisionData PhysicsScene::Box2Sphere(const PhysicsObject * object1, const PhysicsObject * object2)
+{
+	return CollisionData();
+}
+
+PhysicsScene::CollisionData PhysicsScene::Box2Box(const PhysicsObject * object1, const PhysicsObject * object2)
+{
+	return CollisionData();
 }
 

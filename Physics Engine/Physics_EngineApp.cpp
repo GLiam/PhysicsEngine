@@ -30,7 +30,7 @@ bool Physics_EngineApp::startup() {
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
 	m_PhysicsScene = new PhysicsScene();
-	m_PhysicsScene->setGravity(glm::vec2(0, -98.0f));
+	m_PhysicsScene->setGravity(glm::vec2(0, -94.0f));
 	m_PhysicsScene->setTimeStep(0.01f);
 
 	//float radius = 1.0f;
@@ -39,23 +39,35 @@ bool Physics_EngineApp::startup() {
 	//float inclination = (float)M_PI / 4.0f;
 	//m_PhysicsScene->addActor(new Sphere(starpos, inclination, speed, 1, radius, glm::vec4(1, 0, 0, 1)));
 
-	ball = new Sphere(glm::vec2(-40, 0), 
-		glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
-	
-	Sphere* ball1 = new Sphere(glm::vec2(-40, 60),
-		glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 0));
+	//Sphere* ball = new Sphere(glm::vec2(40, 0), 
+	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 1));
+	//Sphere* ball1 = new Sphere(glm::vec2(-40, 0),
+	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 1, 1));
+	//m_PhysicsScene->addActor(ball);
+	//m_PhysicsScene->addActor(ball1);
+	//ball->applyForceToActor(ball, glm::vec2(-2000, 0));
+	//ball1->applyForceToActor(ball1, glm::vec2(2000, 0));
 
-	line = new Plane({ 0, 1 }, 20);
+
+	for (int i = 0; i < 10; i++)
+	{
+		Sphere* ball = new Sphere(glm::vec2(-40+i, -10+(i*5)),
+			glm::vec2(0, 0), 3.0f, 3.0f, glm::vec4((rand()%100)/100.0f, (rand()%100)/100.0f, (rand()%100)/100.0f, 1));
+		m_PhysicsScene->addActor(ball);
+	}
 
 
 
+	Plane* line = new Plane({ 0, 1 }, 40);
+	Plane* line1 = new Plane({ 1, 0 }, 60);
+	Plane* line2 = new Plane({ 0, -1 }, 40);
+	Plane* line3 = new Plane({ -1, 0 }, 60);
 
-	m_PhysicsScene->addActor(ball);
+
 	m_PhysicsScene->addActor(line);
-	m_PhysicsScene->addActor(ball1);
-
-	ball1->applyForceToActor(ball1, glm::vec2(300, 0));
-	ball->applyForceToActor(ball, glm::vec2(300, 0));
+	m_PhysicsScene->addActor(line1);
+	m_PhysicsScene->addActor(line2);
+	m_PhysicsScene->addActor(line3);
 
 	//m_PhysicsScene->setupContinuousDemo(glm::vec2(-40, 0), 45, 25, -10);
 
@@ -81,11 +93,11 @@ void Physics_EngineApp::update(float deltaTime) {
 	//static float xPos = 0;
 	//xPos += 1.0 * deltaTime;
 
-	//static const glm::vec4 colours[] = {
-	//	glm::vec4(1,0,0,1), glm::vec4(0,1,0,1),
-	//	glm::vec4(0,0,1,1), glm::vec4(0.8f,0,0,5.0f),
-	//	glm::vec4(0,1,1,1)
-	//};
+	static const glm::vec4 colours[] = {
+		glm::vec4(1,0,0,1), glm::vec4(0,1,0,1),
+		glm::vec4(0,0,1,1), glm::vec4(0.8f,0,0,5.0f),
+		glm::vec4(0,1,1,1)
+	};
 
 	//static const int rows = 5;
 	//static const int columns = 10;

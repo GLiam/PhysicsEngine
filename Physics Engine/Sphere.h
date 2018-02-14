@@ -14,7 +14,8 @@ public:
 	float getRadius() const {return m_radius; }
 	glm::vec4 getColour() { return m_colour; }
 
-	glm::vec2 setVelocity(glm::vec2 velocity) { m_velocity = velocity; }
+	void setVelocity(glm::vec2 velocity) { m_velocity = velocity; }
+	void setColour(glm::vec4 colour) { m_colour = colour; }
 
 protected:
 	float m_radius;

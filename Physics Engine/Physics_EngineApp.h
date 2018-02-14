@@ -25,6 +25,4 @@ protected:
 
 	PhysicsScene*		m_PhysicsScene;
 	Rigidbody*			m_Rigibody;
-	Sphere*				ball;
-	Plane*				line;	
 };
