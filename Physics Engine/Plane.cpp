@@ -1,7 +1,5 @@
 #include "Plane.h"
 
-
-
 Plane::Plane() : PhysicsObject(PhysicsObject::ShapeType::PLANE)
 {
 	m_distanceToOrigan = 0;

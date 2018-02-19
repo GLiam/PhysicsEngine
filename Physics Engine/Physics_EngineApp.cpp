@@ -48,28 +48,26 @@ bool Physics_EngineApp::startup() {
 	//ball->applyForceToActor(ball, glm::vec2(-2000, 0));
 	//ball1->applyForceToActor(ball1, glm::vec2(2000, 0));
 
-
-	for (int i = 0; i < 10; i++)
-	{
-		Sphere* ball = new Sphere(glm::vec2(-40+i, -10+(i*5)),
-			glm::vec2(0, 0), 3.0f, 3.0f, glm::vec4((rand()%100)/100.0f, (rand()%100)/100.0f, (rand()%100)/100.0f, 1));
-		m_PhysicsScene->addActor(ball);
-	}
-
-
-
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	Sphere* ball = new Sphere(glm::vec2(-40+i, -10+(i*5)),
+	//		glm::vec2(0, 0), 3.0f, 3.0f, glm::vec4((rand()%100)/100.0f, (rand()%100)/100.0f, (rand()%100)/100.0f, 1));
+	//	m_PhysicsScene->addActor(ball);
+	//}
+	
+	Box* box = new Box({ 0.0f, 0.0f }, { 0.0f, 0.0f }, 3, { 3.0f, 3.0f }, { 1, 0, 0, 1 });
+	
 	Plane* line = new Plane({ 0, 1 }, 40);
-	Plane* line1 = new Plane({ 1, 0 }, 60);
-	Plane* line2 = new Plane({ 0, -1 }, 40);
-	Plane* line3 = new Plane({ -1, 0 }, 60);
+	//Plane* line1 = new Plane({ 1, 0 }, 60);
+	//Plane* line2 = new Plane({ 0, -1 }, 40);
+	//Plane* line3 = new Plane({ -1, 0 }, 60);
 
+	m_PhysicsScene->addActor(box);
 
 	m_PhysicsScene->addActor(line);
-	m_PhysicsScene->addActor(line1);
-	m_PhysicsScene->addActor(line2);
-	m_PhysicsScene->addActor(line3);
-
-	//m_PhysicsScene->setupContinuousDemo(glm::vec2(-40, 0), 45, 25, -10);
+	//m_PhysicsScene->addActor(line1);
+	//m_PhysicsScene->addActor(line2);
+	//m_PhysicsScene->addActor(line3);
 
 	return true;
 }

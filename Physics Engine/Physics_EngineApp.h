@@ -5,6 +5,7 @@
 #include "PhysicsScene.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Box.h"
 
 class Physics_EngineApp : public aie::Application {
 public:

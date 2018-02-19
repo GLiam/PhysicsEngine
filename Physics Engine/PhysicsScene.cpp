@@ -3,6 +3,7 @@
 #include "Rigidbody.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Box.h"
 
 typedef PhysicsScene::CollisionData(*collisionFnc)(const PhysicsObject*, const PhysicsObject*);
 
@@ -253,7 +254,47 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * obj
 
 PhysicsScene::CollisionData PhysicsScene::Plane2Box(const PhysicsObject * object1, const PhysicsObject * object2)
 {
-	return CollisionData();
+	const Plane* plane = dynamic_cast<const Plane*>(object1);
+	const Box* box = dynamic_cast <const Box*>(object2);
+	CollisionData collData;
+	collData.wasCollision = false;
+
+	if (box != nullptr && plane != nullptr)
+	{
+		//glm::vec2 tL = glm::vec2(box->getPosition().x - box->getExtenseX(), 
+		//									box->getPosition().y + box->getExtenseY());
+		//glm::vec2 tR = glm::vec2(box->getPosition().x + box->getExtenseX(), 
+		//									box->getPosition().y + box->getExtenseY());
+		//glm::vec2 bL = glm::vec2(box->getPosition().x - box->getExtenseX(), 
+		//									box->getPosition().y - box->getExtenseY());
+		//glm::vec2 bR = glm::vec2(box->getPosition().x + box->getExtenseX(), 
+		//									box->getPosition().y - box->getExtenseY());
+
+		//auto OffSetTL = glm::dot(tL, plane->getNormal()) + plane->getDistance();
+		//auto OffSetTR = glm::dot(tR, plane->getNormal()) + plane->getDistance();
+		//auto OffSetBL = glm::dot(bL, plane->getNormal()) + plane->getDistance();
+		//auto OffSetBR = glm::dot(bR, plane->getNormal()) + plane->getDistance();
+
+		//float Smallest = OffSetTL;
+		//if(Smallest < OffSetTR)
+		//	Smallest = OffSetTR;
+		//if(Smallest < OffSetBL)
+		//	Smallest = OffSetBL;
+		//if(Smallest < OffSetBR)
+		//	Smallest = OffSetBR;
+
+		float distanceBetween = glm::dot(box->getPosition(), plane->getNormal()) + plane->getDistance();
+
+		float d = distanceBetween - glm::length(box->getExtense() * plane->getNormal());
+
+		if(d < 0)
+		{
+			collData.wasCollision = true;
+			collData.normal = plane->getNormal();
+			collData.overlap = -d;
+		}
+	}
+	return collData;
 }
 
 PhysicsScene::CollisionData PhysicsScene::Sphere2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
@@ -303,7 +344,7 @@ PhysicsScene::CollisionData PhysicsScene::Sphere2Box(const PhysicsObject * objec
 
 PhysicsScene::CollisionData PhysicsScene::Box2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
 {
-	return CollisionData();
+	return Plane2Box(object2, object1);
 }
 
 PhysicsScene::CollisionData PhysicsScene::Box2Sphere(const PhysicsObject * object1, const PhysicsObject * object2)
