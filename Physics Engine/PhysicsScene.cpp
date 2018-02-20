@@ -339,7 +339,7 @@ PhysicsScene::CollisionData PhysicsScene::Sphere2Sphere(const PhysicsObject * ob
 
 PhysicsScene::CollisionData PhysicsScene::Sphere2Box(const PhysicsObject * object1, const PhysicsObject * object2)
 {
-	return CollisionData();
+	return Box2Sphere(object2, object1);
 }
 
 PhysicsScene::CollisionData PhysicsScene::Box2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
@@ -349,11 +349,73 @@ PhysicsScene::CollisionData PhysicsScene::Box2Plane(const PhysicsObject * object
 
 PhysicsScene::CollisionData PhysicsScene::Box2Sphere(const PhysicsObject * object1, const PhysicsObject * object2)
 {
-	return CollisionData();
+	const Box* box = dynamic_cast<const Box*>(object1);
+	const Sphere* sphere = dynamic_cast<const Sphere*>(object2);
+
+	CollisionData collData;
+
+	if (box != nullptr && sphere != nullptr)
+	{
+		glm::vec2 offset = sphere->getPosition() - box->getPosition();
+
+		if(std::abs(offset.x) > box->getExtenseX())
+		{
+			offset.x = offset.x < 0 ? -box->getExtenseX() : box->getExtenseX();
+		}
+		if (std::abs(offset.y) > box->getExtenseY())
+		{
+			offset.y = offset.y < 0 ? -box->getExtenseY() : box->getExtenseY();
+		}
+
+		glm::vec2 closestPoint = box->getPosition() + offset;
+
+		glm::vec2 distBetween = sphere->getPosition() - closestPoint;
+
+		if (glm::length(distBetween) < sphere->getRadius())
+		{
+			collData.wasCollision = true;
+			collData.normal = glm::normalize(distBetween);
+			collData.overlap = sphere->getRadius() - glm::length(distBetween);
+		}
+	}
+	return collData;
 }
 
 PhysicsScene::CollisionData PhysicsScene::Box2Box(const PhysicsObject * object1, const PhysicsObject * object2)
 {
-	return CollisionData();
+	const Box* box1 = dynamic_cast<const Box*>(object1);
+	const Box* box2 = dynamic_cast<const Box*>(object2);
+
+	CollisionData colldata;
+
+	if (box1 != nullptr && box2 != nullptr)
+	{
+		glm::vec2 box1TR = glm::vec2(box1->getPosition().x + box1->getExtenseX(), 
+											box1->getPosition().y + box1->getExtenseY());
+		glm::vec2 box1BL = glm::vec2(box1->getPosition().x - box1->getExtenseX(), 
+											box1->getPosition().y - box1->getExtenseY());
+
+		glm::vec2 box2TR = glm::vec2(box2->getPosition().x + box2->getExtenseX(), 
+											box2->getPosition().y + box2->getExtenseY());
+		glm::vec2 box2BL = glm::vec2(box2->getPosition().x - box2->getExtenseX(), 
+											box2->getPosition().y - box2->getExtenseY());
+
+		if (box2BL.x < box1TR.x && box2BL.y < box1TR.y &&
+			box1BL.x < box2TR.x && box1BL.y < box2TR.y)
+		{
+			float XDistBetweenBox1Box2 = box1BL.x - box2TR.x;
+			float XDistBetweenBox2Box1 = box1TR.x - box2BL.x;
+			float YDistBetweenBox1Box2 = box1BL.y - box2TR.y;
+			float YDistBetweenBox2Box1 = box1TR.y - box2BL.y;
+			float overlapX = std::fabsf(XDistBetweenBox1Box2) < std::fabsf(XDistBetweenBox2Box1) ? XDistBetweenBox1Box2 : XDistBetweenBox2Box1;
+			float overlapY = std::fabsf(YDistBetweenBox1Box2) < std::fabsf(YDistBetweenBox2Box1) ? YDistBetweenBox1Box2 : YDistBetweenBox2Box1;
+
+			glm::vec2 overlap = std::fabsf(overlapX) < std::fabsf(overlapY) ? glm::vec2(overlapX, 0) : glm::vec2(0, overlapY);
+			colldata.wasCollision = true;
+			colldata.normal = -glm::normalize(overlap);
+			colldata.overlap = glm::length(overlap);
+		}
+	}
+	return colldata;
 }
 

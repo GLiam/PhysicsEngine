@@ -30,7 +30,7 @@ bool Physics_EngineApp::startup() {
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
 	m_PhysicsScene = new PhysicsScene();
-	m_PhysicsScene->setGravity(glm::vec2(0, -94.0f));
+	m_PhysicsScene->setGravity(glm::vec2(0, -98.07f));
 	m_PhysicsScene->setTimeStep(0.01f);
 
 	//float radius = 1.0f;
@@ -48,26 +48,30 @@ bool Physics_EngineApp::startup() {
 	//ball->applyForceToActor(ball, glm::vec2(-2000, 0));
 	//ball1->applyForceToActor(ball1, glm::vec2(2000, 0));
 
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	Sphere* ball = new Sphere(glm::vec2(-40+i, -10+(i*5)),
-	//		glm::vec2(0, 0), 3.0f, 3.0f, glm::vec4((rand()%100)/100.0f, (rand()%100)/100.0f, (rand()%100)/100.0f, 1));
-	//	m_PhysicsScene->addActor(ball);
-	//}
-	
-	Box* box = new Box({ 0.0f, 0.0f }, { 0.0f, 0.0f }, 3, { 3.0f, 3.0f }, { 1, 0, 0, 1 });
-	
-	Plane* line = new Plane({ 0, 1 }, 40);
-	//Plane* line1 = new Plane({ 1, 0 }, 60);
-	//Plane* line2 = new Plane({ 0, -1 }, 40);
-	//Plane* line3 = new Plane({ -1, 0 }, 60);
+	Sphere* ball1 = new Sphere({ 0.0f, 20.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 0.5f, 1, 0, 1 });
+	Sphere* ball2 = new Sphere({ 0.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 0.5f, 0, 1 });
+	Sphere* ball3 = new Sphere({ 30.0f, 0.0f }, { 100.0f, 0.0f }, 500, 4.0f, { 1.0f, 1, 0, 1 });
 
-	m_PhysicsScene->addActor(box);
+	Box* box1 = new Box({ 0.0f, 10.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 1, 0, 1 });
+	Box* box2 = new Box({ 0.0f, 30.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 0, 0, 1 });
+
+	Plane* line = new Plane({ 0, 1 }, 40);
+	Plane* line1 = new Plane({ 1, 0 }, 60);
+	Plane* line2 = new Plane({ 0, -1 }, 40);
+	Plane* line3 = new Plane({ -1, 0 }, 60);
+
+	m_PhysicsScene->addActor(ball1);
+	m_PhysicsScene->addActor(ball2);
+	m_PhysicsScene->addActor(ball3);
+	ball3->setVelocity({ 100.0f, 0.0f });
+
+	m_PhysicsScene->addActor(box1);
+	m_PhysicsScene->addActor(box2);
 
 	m_PhysicsScene->addActor(line);
-	//m_PhysicsScene->addActor(line1);
-	//m_PhysicsScene->addActor(line2);
-	//m_PhysicsScene->addActor(line3);
+	m_PhysicsScene->addActor(line1);
+	m_PhysicsScene->addActor(line2);
+	m_PhysicsScene->addActor(line3);
 
 	return true;
 }
