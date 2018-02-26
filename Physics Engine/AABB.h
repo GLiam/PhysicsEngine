@@ -1,10 +1,10 @@
 #pragma once
 #include "Rigidbody.h"
-class Box : public Rigidbody
+class AABB : public Rigidbody
 {
 public:
-	Box();
-	Box(const glm::vec2 position, const glm::vec2 velocity, const float mass,
+	AABB();
+	AABB(const glm::vec2 position, const glm::vec2 velocity, const float mass,
 		glm::vec2 Extense, const glm::vec4 colour);
 
 	virtual void makeGizmo() override;

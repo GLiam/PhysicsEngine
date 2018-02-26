@@ -3,7 +3,7 @@
 #include "Rigidbody.h"
 #include "Sphere.h"
 #include "Plane.h"
-#include "Box.h"
+#include "AABB.h"
 
 typedef PhysicsScene::CollisionData(*collisionFnc)(const PhysicsObject*, const PhysicsObject*);
 
@@ -229,7 +229,8 @@ void PhysicsScene::checkForCollisions()
 	}
 }
 
-PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * object1, 
+									const PhysicsObject * object2)
 {
 	const Plane* plane = dynamic_cast<const Plane*>(object1);
 	const Sphere* sphere = dynamic_cast<const Sphere*>(object2);
@@ -252,10 +253,11 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * obj
 	return collData;
 }
 
-PhysicsScene::CollisionData PhysicsScene::Plane2Box(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Plane2Box(const PhysicsObject * object1,
+									const PhysicsObject * object2)
 {
 	const Plane* plane = dynamic_cast<const Plane*>(object1);
-	const Box* box = dynamic_cast <const Box*>(object2);
+	const AABB* box = dynamic_cast <const AABB*>(object2);
 	CollisionData collData;
 	collData.wasCollision = false;
 
@@ -297,7 +299,8 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Box(const PhysicsObject * object
 	return collData;
 }
 
-PhysicsScene::CollisionData PhysicsScene::Sphere2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Sphere2Plane(const PhysicsObject * object1, 
+									const PhysicsObject * object2)
 {
 
 	//const Sphere* sphere = dynamic_cast<const Sphere*>(object1);
@@ -306,7 +309,8 @@ PhysicsScene::CollisionData PhysicsScene::Sphere2Plane(const PhysicsObject * obj
 	return Plane2Sphere(object2, object1);
 }
 
-PhysicsScene::CollisionData PhysicsScene::Sphere2Sphere(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Sphere2Sphere(const PhysicsObject * object1,
+									const PhysicsObject * object2)
 {
 	const Sphere* sphere1 = dynamic_cast<const Sphere*>(object1);
 	const Sphere* sphere2 = dynamic_cast<const Sphere*>(object2);
@@ -337,19 +341,22 @@ PhysicsScene::CollisionData PhysicsScene::Sphere2Sphere(const PhysicsObject * ob
 	return CollData;
 }
 
-PhysicsScene::CollisionData PhysicsScene::Sphere2Box(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Sphere2Box(const PhysicsObject * object1, 
+									const PhysicsObject * object2)
 {
 	return Box2Sphere(object2, object1);
 }
 
-PhysicsScene::CollisionData PhysicsScene::Box2Plane(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Box2Plane(const PhysicsObject * object1,
+									const PhysicsObject * object2)
 {
 	return Plane2Box(object2, object1);
 }
 
-PhysicsScene::CollisionData PhysicsScene::Box2Sphere(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Box2Sphere(const PhysicsObject * object1,
+									const PhysicsObject * object2)
 {
-	const Box* box = dynamic_cast<const Box*>(object1);
+	const AABB* box = dynamic_cast<const AABB*>(object1);
 	const Sphere* sphere = dynamic_cast<const Sphere*>(object2);
 
 	CollisionData collData;
@@ -381,10 +388,11 @@ PhysicsScene::CollisionData PhysicsScene::Box2Sphere(const PhysicsObject * objec
 	return collData;
 }
 
-PhysicsScene::CollisionData PhysicsScene::Box2Box(const PhysicsObject * object1, const PhysicsObject * object2)
+PhysicsScene::CollisionData PhysicsScene::Box2Box(const PhysicsObject * object1,
+									const PhysicsObject * object2)
 {
-	const Box* box1 = dynamic_cast<const Box*>(object1);
-	const Box* box2 = dynamic_cast<const Box*>(object2);
+	const AABB* box1 = dynamic_cast<const AABB*>(object1);
+	const AABB* box2 = dynamic_cast<const AABB*>(object2);
 
 	CollisionData colldata;
 
@@ -418,4 +426,3 @@ PhysicsScene::CollisionData PhysicsScene::Box2Box(const PhysicsObject * object1,
 	}
 	return colldata;
 }
-
