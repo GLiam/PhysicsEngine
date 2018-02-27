@@ -237,6 +237,8 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * obj
 
 	CollisionData collData;
 	collData.wasCollision = false;
+
+	//glm::vec2 contact = sphere->getPosition() + (collData.normal * -sphere->getRadius());
 	
 	if (sphere != nullptr && plane != nullptr)
 	{
