@@ -326,11 +326,10 @@ PhysicsScene::CollisionData PhysicsScene::Sphere2Sphere(const PhysicsObject * ob
 //		float minDistanceBetween = sphere1->getRadius() + sphere2->getRadius();
 
 		glm::vec2 offset = sphere2->getPosition() - sphere1->getPosition();
-		float sqrdDistance = offset.x * offset.x + offset.y * offset.y;
-		float distanceBetween = sqrdDistance;
+		float distanceBetween = glm::length(offset);
 
 		float minDistanceBetween = (sphere1->getRadius() + sphere2->getRadius());
-		minDistanceBetween *= minDistanceBetween;
+		//minDistanceBetween *= minDistanceBetween;
 
 		if (distanceBetween < minDistanceBetween)
 		{

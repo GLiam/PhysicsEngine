@@ -9,8 +9,8 @@ public:
 
 	virtual void fixedUpdate(glm::vec2 gravity, float timeStep) override;
 	virtual void debug() override;
-	void applyForce(glm::vec2 force, glm::vec2 pos);
-	//void applyForceToActor(Rigidbody* actor2, glm::vec2 force);
+	void applyForce(glm::vec2 force /*, glm::vec2 pos*/);
+	void applyForceToActor(Rigidbody* actor2, glm::vec2 force);
 	void resolveCollision(Rigidbody* actor2, glm::vec2 contact,
 		glm::vec2* collisionNormal = nullptr);
 

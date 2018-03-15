@@ -40,10 +40,10 @@ void Rigidbody::debug()
 {
 }
 
-void Rigidbody::applyForce(glm::vec2 force, glm::vec2 pos)
+void Rigidbody::applyForce(glm::vec2 force/*, glm::vec2 pos*/)
 {
 	m_acceleration += force / m_mass;
-	m_angularVelocity += (force.y * pos.x - force.x * pos.y) / (m_moment);
+	//m_angularVelocity += (force /*.y * pos.x - force.x * pos.y) / (m_moment)*/;
 }
 
 void Rigidbody::resolveCollision(Rigidbody * actor2, glm::vec2 contact, 
@@ -70,14 +70,14 @@ void Rigidbody::resolveCollision(Rigidbody * actor2, glm::vec2 contact,
 		glm::vec2 force = (1.0f + elasticity)*mass1*mass2 /
 			(mass1 + mass2)*(v1 - v2)*normal;
 
-		applyForce(-force, contact - m_position);
-		actor2->applyForce(force, contact - actor2->m_position);
+		applyForce(-force) /*, contact - m_position)*/;
+		actor2->applyForce(force) /*,contact - actor2->m_position)*/;
 	}
 }
 
-//void Rigidbody::applyForceToActor(Rigidbody * actor2, glm::vec2 force)
-//{
-//	applyForce(force);
-//	actor2->applyForce(force);
-//}
+void Rigidbody::applyForceToActor(Rigidbody * actor2, glm::vec2 force)
+{
+	applyForce(force);
+	actor2->applyForce(force);
+}
 

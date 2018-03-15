@@ -41,16 +41,16 @@ bool Physics_EngineApp::startup() {
 
 	//Sphere* ball = new Sphere(glm::vec2(40, 0), 
 	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 0, 1));
-	//Sphere* ball1 = new Sphere(glm::vec2(-40, 0),
+	//Sphere* ball2 = new Sphere(glm::vec2(-40, 0),
 	//	glm::vec2(0, 0), 3.0f, 1, glm::vec4(1, 0, 1, 1));
 	//m_PhysicsScene->addActor(ball);
-	//m_PhysicsScene->addActor(ball1);
+	//m_PhysicsScene->addActor(ball2);
 	//ball->applyForceToActor(ball, glm::vec2(-2000, 0));
-	//ball1->applyForceToActor(ball1, glm::vec2(2000, 0));
+	//ball2->applyForceToActor(ball2, glm::vec2(2000, 0));
 
 	Sphere* ball1 = new Sphere({ 0.0f, 20.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 0.5f, 1, 0, 1 });
 	Sphere* ball2 = new Sphere({ 0.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 0.5f, 0, 1 });
-	//Sphere* ball3 = new Sphere({ 30.0f, 0.0f }, { 100.0f, 0.0f }, 100, 4.0f, { 1.0f, 1, 0, 1 });
+	Sphere* ball3 = new Sphere({ -40.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 1, 0, 1 });
 
 	AABB* aabb1 = new AABB({ 0.0f, 10.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 1, 0, 1 });
 	AABB* aabb2 = new AABB({ 0.0f, 30.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 0, 0, 1 });
@@ -58,13 +58,13 @@ bool Physics_EngineApp::startup() {
 
 	Plane* line = new Plane({ 0, 1 }, 40);
 	Plane* line1 = new Plane({ 1, 0 }, 60);
-	Plane* line2 = new Plane({ 0, -1 }, 40);
+	//Plane* line2 = new Plane({ 0, -1 }, 40);
 	Plane* line3 = new Plane({ -1, 0 }, 60);
 
 	m_PhysicsScene->addActor(ball1);
 	m_PhysicsScene->addActor(ball2);
-	//m_PhysicsScene->addActor(ball3);
-	//ball3->setVelocity({ 100.0f, 0.0f });
+	m_PhysicsScene->addActor(ball3);
+	ball3->setVelocity({ -30.0f, 100.0f });
 
 	m_PhysicsScene->addActor(aabb1);
 	m_PhysicsScene->addActor(aabb2);
@@ -72,8 +72,11 @@ bool Physics_EngineApp::startup() {
 
 	m_PhysicsScene->addActor(line);
 	m_PhysicsScene->addActor(line1);
-	m_PhysicsScene->addActor(line2);
+	//m_PhysicsScene->addActor(line2);
 	m_PhysicsScene->addActor(line3);
+
+
+
 
 	return true;
 }
