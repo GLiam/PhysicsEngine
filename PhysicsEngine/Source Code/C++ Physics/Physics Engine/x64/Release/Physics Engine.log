@@ -1,0 +1,12 @@
+﻿  AABB.cpp
+  PhysicsScene.cpp
+PhysicsScene.cpp(205): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Physics_EngineApp.cpp
+  main.cpp
+  Plane.cpp
+  Rigidbody.cpp
+  Sphere.cpp
+  Generating code
+  All 1415 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Physics Engine.vcxproj -> C:\Users\s162871\Documents\PhysicsEngine\temp\Physics Engine\x64\Release\Physics Engine.exe

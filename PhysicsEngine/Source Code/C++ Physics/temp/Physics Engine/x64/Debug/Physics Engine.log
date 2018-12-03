@@ -1,0 +1,11 @@
+﻿  Sphere.cpp
+  Rigidbody.cpp
+  Plane.cpp
+  main.cpp
+  Physics_EngineApp.cpp
+  PhysicsScene.cpp
+c:\users\s162871\desktop\2yearassessment1\source code\c++ physics\physics engine\physicsscene.cpp(205): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  AABB.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Physics Engine.vcxproj -> C:\Users\s162871\Desktop\2YearAssessment1\Source Code\C++ Physics\temp\Physics Engine\x64\Debug\Physics Engine.exe
