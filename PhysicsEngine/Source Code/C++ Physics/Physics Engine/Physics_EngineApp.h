@@ -25,5 +25,10 @@ protected:
 	aie::Font*			m_font;
 
 	PhysicsScene*		m_PhysicsScene;
-	Rigidbody*			m_Rigibody;
+	//Rigidbody*			m_Rigibody;
+	Sphere*				m_pShere;
+
+private:
+	PhysicsObject * m_pObject;
+
 };

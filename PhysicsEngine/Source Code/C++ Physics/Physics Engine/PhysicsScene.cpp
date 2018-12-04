@@ -20,10 +20,22 @@ PhysicsScene::PhysicsScene() : m_timeStep(0.01f), m_gravity(glm::vec2(0, 0))
 
 PhysicsScene::~PhysicsScene()
 {
+/*
 	for (auto pActor : m_actors)
 	{
 		delete pActor;
 	}
+*/
+	if (!m_actors.empty())
+	{
+		for (int index = 0; index < m_actors.size(); index++)
+		{
+			delete	m_actors[index];
+		}
+	}
+
+
+
 }
 
 void PhysicsScene::addActor(PhysicsObject * actor)
@@ -84,7 +96,7 @@ void PhysicsScene::update(float deltatime)
 void PhysicsScene::updateGizmos()
 {
 	for (auto pActor : m_actors) 
-{
+	{
 		pActor->makeGizmo();
 	}
 }
@@ -220,6 +232,7 @@ void PhysicsScene::checkForCollisions()
 			if (fnc != nullptr)
 			{
 				CollisionData collisionData = fnc(object1, object2);
+
 				if (collisionData.wasCollision == true)
 				{
 					handleCollision(object1, object2, collisionData);
@@ -234,6 +247,7 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * obj
 {
 	const Plane* plane = dynamic_cast<const Plane*>(object1);
 	const Sphere* sphere = dynamic_cast<const Sphere*>(object2);
+	
 
 	CollisionData collData;
 	collData.wasCollision = false;
@@ -252,6 +266,8 @@ PhysicsScene::CollisionData PhysicsScene::Plane2Sphere(const PhysicsObject * obj
 			collData.overlap = distanceBetween * -1;
 		}
 	}
+
+ 
 	return collData;
 }
 

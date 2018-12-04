@@ -12,7 +12,7 @@
 
 
 Physics_EngineApp::Physics_EngineApp() {
-
+//
 }
 
 Physics_EngineApp::~Physics_EngineApp() {
@@ -20,6 +20,10 @@ Physics_EngineApp::~Physics_EngineApp() {
 }
 
 bool Physics_EngineApp::startup() {
+
+
+	#pragma region Init Setup
+	srand((unsigned int)time(NULL));
 
 	aie::Gizmos::create(255U, 255U, 65535U, 65535U);
 
@@ -32,6 +36,8 @@ bool Physics_EngineApp::startup() {
 	m_PhysicsScene = new PhysicsScene();
 	m_PhysicsScene->setGravity(glm::vec2(0, -98.07f));
 	m_PhysicsScene->setTimeStep(0.01f);
+
+#pragma endregion
 
 	//float radius = 1.0f;
 	//float speed = 30;
@@ -48,44 +54,49 @@ bool Physics_EngineApp::startup() {
 	//ball->applyForceToActor(ball, glm::vec2(-2000, 0));
 	//ball2->applyForceToActor(ball2, glm::vec2(2000, 0));
 
-	Sphere* ball1 = new Sphere({ 0.0f, 20.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 0.5f, 1, 0, 1 });
-	Sphere* ball2 = new Sphere({ 0.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 0.5f, 0, 1 });
-	Sphere* ball3 = new Sphere({ -40.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 1, 0, 1 });
+	m_pObject = new Sphere({ 0.0f, 20.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 0.5f, 1, 0, 1 });
+	m_PhysicsScene->addActor(m_pObject);
 
-	AABB* aabb1 = new AABB({ 0.0f, 10.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 1, 0, 1 });
-	AABB* aabb2 = new AABB({ 0.0f, 30.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 0, 0, 1 });
-	AABB* aabb3 = new AABB({ 40.0f, 0.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 1, 1, 1 });
+	m_pObject = new Sphere({ 0.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 0.5f, 0, 1 });
+	m_PhysicsScene->addActor(m_pObject);
 
-	Plane* line = new Plane({ 0, 1 }, 40);
-	Plane* line1 = new Plane({ 1, 0 }, 60);
-	//Plane* line2 = new Plane({ 0, -1 }, 40);
-	Plane* line3 = new Plane({ -1, 0 }, 60);
-
-	m_PhysicsScene->addActor(ball1);
-	m_PhysicsScene->addActor(ball2);
-	m_PhysicsScene->addActor(ball3);
-	ball3->setVelocity({ -30.0f, 100.0f });
-
-	m_PhysicsScene->addActor(aabb1);
-	m_PhysicsScene->addActor(aabb2);
-	m_PhysicsScene->addActor(aabb3);
-
-	m_PhysicsScene->addActor(line);
-	m_PhysicsScene->addActor(line1);
-	//m_PhysicsScene->addActor(line2);
-	m_PhysicsScene->addActor(line3);
+	m_pShere = new Sphere({ -40.0f, 0.0f }, { 0.0f, 0.0f }, 3, 4.0f, { 1.0f, 1, 0, 1 });
+	m_pShere->setVelocity({ (-std::rand() % 100) + 5.0f, std::rand() % 100 });
+	m_PhysicsScene->addActor(m_pShere);
 
 
+	m_pObject = new AABB({ 0.0f, 10.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 1, 0, 1 });
+	m_PhysicsScene->addActor(m_pObject);
+	
+	m_pObject = new AABB({ 0.0f, 30.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 0, 0, 1 });
+	m_PhysicsScene->addActor(m_pObject);
+	
+	m_pObject = new AABB({ 40.0f, 0.0f }, { 0.0f, 0.0f }, 3, { 4.0f, 3.0f }, { 1, 1, 1, 1 });
+	m_PhysicsScene->addActor(m_pObject);
 
+
+	m_pObject = new Plane({ 0, 1 }, 40);
+	m_PhysicsScene->addActor(m_pObject);
+	
+	m_pObject = new Plane({ 1, 0 }, 60);
+	m_PhysicsScene->addActor(m_pObject);
+	
+	m_pObject = new Plane({ -1, 0 }, 60);
+	m_PhysicsScene->addActor(m_pObject);
+	
 
 	return true;
 }
 
-void Physics_EngineApp::shutdown() {
-
+void Physics_EngineApp::shutdown() 
+{
 	delete m_font;
 	delete m_2dRenderer;
+	delete m_PhysicsScene;
+	
+	aie::Gizmos::destroy();
 }
+
 
 void Physics_EngineApp::update(float deltaTime) {
 	
@@ -135,6 +146,7 @@ void Physics_EngineApp::update(float deltaTime) {
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
 }
+
 
 void Physics_EngineApp::draw() {
 

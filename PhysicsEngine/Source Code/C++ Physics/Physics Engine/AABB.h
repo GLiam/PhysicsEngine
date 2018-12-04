@@ -3,6 +3,7 @@
 class AABB : public Rigidbody
 {
 public:
+	~AABB();
 	AABB();
 	AABB(const glm::vec2 position, const glm::vec2 velocity, const float mass,
 		glm::vec2 Extense, const glm::vec4 colour);
